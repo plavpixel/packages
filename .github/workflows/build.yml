@@ -1,4 +1,4 @@
-name: Build
+name: Build packages
 on:
   workflow_dispatch:
   push:
@@ -8,7 +8,7 @@ permissions:
   contents: write
   packages: read
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.sha }}
+  group: ${{ github.workflow }}
   cancel-in-progress: true
 jobs:
   build:
@@ -19,13 +19,15 @@ jobs:
       env:
         XBPS_TARGET_ARCH: ${{ matrix.arch }}
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
         arch: [ x86_64, x86_64-musl ]
     steps:
       - name: clone ${{ github.repository }}
         run: |
-          git clone https://github.com/${{ github.repository }}.git --shallow-submodules --recursive --depth=2
+          # depth=100 because each build is run one by one, and each successful build will push a new commits
+          git clone https://github.com/${{ github.repository }}.git --shallow-submodules --recursive --depth=100
       - name: bootstraping xbps-src
         run: |
           cd packages
@@ -40,15 +42,27 @@ jobs:
         run: |
           cd packages
           gpg --quiet --batch --yes --decrypt --passphrase="${{ secrets.PRIVATE_PEM_GPG_PASS }}" --output ./private.pem ./private.pem.gpg
-          xbps-rindex --privkey private.pem --sign-pkg --signedby "Voiders community" ./hostdir/binpkgs/*
+          xbps-rindex --privkey private.pem --sign-pkg --signedby "Voiders community" ./hostdir/binpkgs/*.xbps
+      - name: adding packages
+        run: |
+          cd packages
+          xbps-rindex -a ./hostdir/binpkgs/*.xbps
+      - name: signing repo
+        run: |
+          cd packages
+          xbps-rindex --privkey private.pem --sign --signedby "Voiders community" hostdir/binpkgs
       - name: pushing packages
         run: |
           cd packages
           git config user.email "community@voiders.fake.url"
           git config user.name "Voiders Community"
           git pull --autostash --rebase
-          git add ./hostdir/binpkgs/*.xbps*
-          git commit -m "[ci] add newly built packages"
-          git remote remove origin
-          git remote add origin https://builder:${{ secrets.PAT }}@github.com/${{ github.repository }}
-          git push --set-upstream origin master
+          git add ./hostdir/binpkgs || :
+
+          # if there's something cached
+          if ! git diff --cached --quiet; then
+            git commit -m "[ci] add newly built packages ${{ matrix.arch }}"
+            git remote remove origin
+            git remote add origin https://builder:${{ secrets.PAT }}@github.com/${{ github.repository }}
+            git push --set-upstream origin master
+          fi

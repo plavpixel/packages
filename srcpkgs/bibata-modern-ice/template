@@ -1,7 +1,7 @@
 # Template file for 'bibata-modern-ice'
 pkgname=bibata-modern-ice
 version=2.0.7
-revision=1
+revision=3
 short_desc="Open source, compact, and material designed cursor set."
 maintainer="Wladimir Bec <wladimirbec@gmail.com>"
 license="GPL-3.0-only"
