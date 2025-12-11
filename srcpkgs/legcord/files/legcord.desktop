@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Legcord
+Comment=Custom, lightweight Discord client
+GenericName=Internet Messenger
+Exec=legcord %U
+Icon=legcord
+Type=Application
+StartupNotify=true
+Categories=Network;InstantMessaging;Chat;
