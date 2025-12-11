@@ -1,0 +1,41 @@
+# Template file for 'legcord'
+pkgname=legcord
+version=1.1.6
+revision=1
+hostmakedepends="tar curl"
+depends="glib libnotify libpipewire libpulseaudio"
+short_desc="Lightweight, customizable Discord client that puts you in control"
+maintainer="Haris <plavpxl@proton.me>"
+license="GPL-3.0-only"
+homepage="https://github.com/Legcord/Legcord"
+distfiles="https://github.com/Legcord/Legcord/releases/download/v${version}/Legcord-${version}-linux-x64.tar.gz"
+checksum="cc22d5b383c8467f91f637d9a63970cc4a3b545708e5888af7c0bd880cf2f4dd"
+
+do_install() {
+    vmkdir opt/legcord
+    for file in *; do
+        if [ -e "$file" ] && [ "$file" != "." ] && [ "$file" != ".." ]; then
+            vcopy "$file" opt/legcord/
+        fi
+    done
+
+    vmkdir usr/bin
+    cat > "${DESTDIR}/usr/bin/legcord" << 'EOF'
+#!/bin/sh
+exec /opt/legcord/Legcord "$@"
+EOF
+    chmod 755 "${DESTDIR}/usr/bin/legcord"
+
+    local koffi_dir="${DESTDIR}/opt/legcord/resources/app.asar.unpacked/node_modules/koffi/build/koffi"
+    if [ -d "$koffi_dir" ]; then
+        find "$koffi_dir" -type d \( -name "win32_*" -o -name "darwin_*" -o -name "freebsd_*" -o -name "openbsd_*" \) -exec rm -rf {} + 2>/dev/null || true
+        # TODO: find a better way to stop xbps-src from screaming at finding other architectures
+        find "$koffi_dir" -type d \( -name "linux_arm*" -o -name "linux_ia32" -o -name "linux_loong64" -o -name "linux_riscv64d" -o -name "musl_x64" \) -exec rm -rf {} + 2>/dev/null || true
+    fi
+
+    vinstall "${FILESDIR}/vesktop.desktop" 644 "/usr/share/applications"
+
+    vmkdir usr/share/pixmaps
+    curl -s -o "${DESTDIR}/usr/share/pixmaps/legcord.png" \
+        "https://raw.githubusercontent.com/Legcord/Legcord/refs/heads/stable/assets/Square150x150Logo.png"
+}
