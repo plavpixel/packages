@@ -1,7 +1,7 @@
 # Template file for 'legcord'
 pkgname=legcord
 version=1.1.6
-revision=2
+revision=3
 hostmakedepends="tar curl"
 depends="glib libnotify libpipewire libpulseaudio"
 short_desc="Lightweight, customizable Discord client that puts you in control"
@@ -30,6 +30,7 @@ do_install() {
         find "$koffi_dir" -type d \( -name "linux_arm*" -o -name "linux_ia32" -o -name "linux_loong64" -o -name "linux_riscv64d" -o -name "musl_x64" \) -exec rm -rf {} + 2>/dev/null || true
     fi
 
+    vmkdir usr/share/applications
     vinstall "${FILESDIR}/vesktop.desktop" 644 "/usr/share/applications"
 
     vmkdir usr/share/pixmaps
