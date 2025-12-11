@@ -1,4 +1,12 @@
-Void packages repo maintained by the unofficial void linux community.
+Void packages repo maintained by the unofficial Void Linux Community.
+
+Packages added by [plavpixel](https://github.com/plavpixel/) in this repo fork:
+- legcord
+- limine-entry-tool
+- linux-cachyos (unfinished)
+- svc
+
+Each package is its own branch, everyone is encouraged to review my templates and open issues/PRs fixing them.
 
 You can use this repo in two ways, either localy or remotely.
 
