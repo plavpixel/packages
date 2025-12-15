@@ -1,0 +1,2 @@
+#!/bin/sh
+exec electron39 /usr/lib/legcord/app.asar "$@"
