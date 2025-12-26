@@ -28,9 +28,10 @@ do_build() {
 
     pnpm install --frozen-lockfile
     pnpm run build
-    pnpm exec electron-builder --linux --x64 --dir \
+    pnpm exec electron-builder --linux --x64 \
         --config.electronDist="/usr/lib/electron${SYSTEM_ELECTRON_MAJOR}" \
         --config.electronVersion="${SYSTEM_ELECTRON_VER}" \
+        --config.asarUnpack="**/*.node" \
         --config.npmRebuild="false" \
         --config.directories.output="dist"
 }
