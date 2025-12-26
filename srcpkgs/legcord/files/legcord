@@ -1,2 +1,2 @@
 #!/bin/sh
-exec electron39 /usr/lib/legcord/app.asar "$@"
+exec electron35 /usr/lib/legcord/app.asar "$@"
