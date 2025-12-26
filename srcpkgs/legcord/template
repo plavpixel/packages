@@ -2,7 +2,6 @@
 pkgname=legcord
 version=1.1.5
 revision=1
-build_style=manual
 hostmakedepends="pnpm nodejs git python3 make gcc pkg-config libnotify-devel"
 depends="electron35"
 short_desc="Lightweight, customizable Discord client (built from source)"
