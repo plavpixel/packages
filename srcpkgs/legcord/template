@@ -1,44 +1,45 @@
 # Template file for 'legcord'
 pkgname=legcord
-version=1.1.5
+version=1.1.1
 revision=1
-hostmakedepends="pnpm nodejs git python3 make gcc pkg-config libnotify-devel"
+hostmakedepends="pnpm nodejs git python3 python3-devel make gcc pkg-config libnotify-devel cmake"
 depends="electron35"
-short_desc="Lightweight, customizable Discord client (built from source)"
+short_desc="Discord client with builtin client mod and theme support"
 maintainer="Haris <plavpxl@proton.me>"
 license="OSL-3.0"
 homepage="https://github.com/Legcord/Legcord"
 distfiles="https://github.com/Legcord/Legcord/archive/refs/tags/v${version}.tar.gz"
-checksum=3ffa56c43c6018a5cb8ba4df8fd0205b037251a38be393f989cc7a856390efe3
+checksum=3b6215e28356426992f67db0bcaff992cc58779d6a3e684a284c6765a75c20f2
 
 do_build() {
-	# force native modules (koffi) to compile for electron35
-	export npm_config_target=35.7.2
-	export npm_config_arch=x64
-	export npm_config_target_arch=x64
-	export npm_config_disturl=https://electronjs.org/headers
-	export npm_config_runtime=electron
-	export npm_config_build_from_source=true
+    # force native modules (koffi) to compile for the Electron version in Void repos (35.7.2)
+    export npm_config_target=35.7.2
+    export npm_config_arch=x64
+    export npm_config_target_arch=x64
+    export npm_config_disturl=https://electronjs.org/headers
+    export npm_config_runtime=electron
+    export npm_config_build_from_source=true
 
-	pnpm install --frozen-lockfile
-	pnpm run build
+    pnpm install --frozen-lockfile
+    pnpm run build
 
-	pnpm exec electron-builder --dir --linux x64 \
-	--config.npmRebuild=false \
-	--config.directories.output=dist
+    # Build for Linux x64 (note: --linux --x64 is the correct syntax)
+    HOME=/tmp pnpm exec electron-builder --dir --linux --x64 \
+        --config.npmRebuild=false \
+        --config.directories.output=dist
 }
 
 do_install() {
-	vmkdir usr/lib/legcord
-	vcopy dist/linux-unpacked/resources/app.asar usr/lib/legcord/
+    vmkdir usr/lib/legcord
+    vcopy dist/linux-unpacked/resources/app.asar usr/lib/legcord/
 
-	vbin "${FILESDIR}/legcord"
-	vinstall "${FILESDIR}/legcord.desktop" 644 usr/share/applications
+    vbin "${FILESDIR}/legcord"
+    vinstall "${FILESDIR}/legcord.desktop" 644 usr/share/applications
 
-	# try build/icon.png first, fallback to assets/ac_icon.png
-	if [ -f "build/icon.png" ]; then
-	vinstall build/icon.png 644 usr/share/pixmaps/legcord.png
-	else
-	vinstall assets/ac_icon.png 644 usr/share/pixmaps/legcord.png
-	fi
+    # try build/icon.png first, fallback to assets/ac_icon.png
+    if [ -f "build/icon.png" ]; then
+        vinstall build/icon.png 644 usr/share/pixmaps/legcord.png
+    else
+        vinstall assets/ac_icon.png 644 usr/share/pixmaps/legcord.png
+    fi
 }
