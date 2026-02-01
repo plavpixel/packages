@@ -31,7 +31,7 @@ jobs:
       - name: Prepare Container
         run: |
           xbps-install -Syu xbps
-          xbps-install -y git bash gnupg tar curl
+          xbps-install -y git bash gnupg tar curl wget base-devel gawk python3 xtools procps-ng
 
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
           git config --global --add safe.directory "$GITHUB_WORKSPACE/void-packages"
