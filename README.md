@@ -1,10 +1,10 @@
 # Void Community Repository
 
-[![Build Status](https://img.shields.io/github/actions/workflow/status/voiders-community/void-packages/build.yml?style=flat-square&label=Build)](https://github.com/voiders-community/packages/actions)
-[![Packages](https://img.shields.io/github/directory-file-count/voiders-community/void-packages/srcpkgs?style=flat-square&label=Packages&type=dir)](https://github.com/voiders-community/packages/tree/master/srcpkgs)
-[![Open Issues](https://img.shields.io/github/issues/voiders-community/void-packages?style=flat-square&color=orange)](https://github.com/voiders-community/packages/issues)
-[![Pull Requests](https://img.shields.io/github/issues-pr/voiders-community/void-packages?style=flat-square&color=blue)](https://github.com/voiders-community/packages/pulls)
-[![License](https://img.shields.io/github/license/voiders-community/void-packages?style=flat-square)](LICENSE.md)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/voiders-community/packages/build.yml?style=flat-square&label=Build)](https://github.com/voiders-community/packages/actions)
+[![Packages](https://img.shields.io/github/directory-file-count/voiders-community/packages/srcpkgs?style=flat-square&label=Packages&type=dir)](https://github.com/voiders-community/packages/tree/master/srcpkgs)
+[![Open Issues](https://img.shields.io/github/issues/voiders-community/packages?style=flat-square&color=orange)](https://github.com/voiders-community/packages/issues)
+[![Pull Requests](https://img.shields.io/github/issues-pr/voiders-community/packages?style=flat-square&color=blue)](https://github.com/voiders-community/packages/pulls)
+[![License](https://img.shields.io/github/license/voiders-community/packages?style=flat-square)](LICENSE.md)
 
 An unofficial, community-driven package repository for [Void Linux](https://voidlinux.org).
 
