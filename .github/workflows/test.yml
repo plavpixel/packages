@@ -31,6 +31,7 @@ jobs:
       - name: Prepare Container
         run: |
           xbps-install -Syu xbps
+          # xtools is included here, providing xlint
           xbps-install -y git bash gnupg tar curl wget base-devel gawk python3 xtools procps-ng
 
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
@@ -60,6 +61,14 @@ jobs:
             echo "Detected changes in: $CHANGED"
             echo "templates=$CHANGED" >> $GITHUB_OUTPUT
           fi
+
+      - name: Lint Packages
+        if: steps.changes.outputs.templates != ''
+        run: |
+          for pkg in ${{ steps.changes.outputs.templates }}; do
+            echo "Linting $pkg..."
+            xlint "srcpkgs/$pkg"
+          done
 
       - name: Bootstrap xbps-src
         run: ./build.sh bootstrap
