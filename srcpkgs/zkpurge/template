@@ -3,8 +3,8 @@ pkgname=zkpurge
 version=1.1.0
 revision=1
 build_style=gnu-makefile
-hostmakedepends="clang"
 make_build_args="CC=clang"
+hostmakedepends="clang"
 short_desc="Minimal C utility to purge old ZFSBootMenu executables"
 maintainer="Haris <plavpxl@proton.me>"
 license="Unlicense"
