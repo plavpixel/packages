@@ -45,7 +45,7 @@ sudo xbps-install <package_name>
 To list all packages available in this repository:
 
 ```sh
-xbps-query -Rs --repository=https://voiders-community.github.io/packages "*"
+xbps-query -i -M --repository https://voiders-community.github.io/packages -s ''
 ```
 
 ## Contributing
@@ -69,6 +69,8 @@ To keep this repo more open, we allow opening Pull Requests (PRs) if you don't h
 - Why should we add and maintain this package?
 - Should it be compiled from source or download a binary pkg?
 - Does it appear to be safe? (i.e., no known malicious source code or blobs)
+
+New PRs will be checked automatically. For larges packages with long compile times, consider prefixing your PR title with `[ci skip]` to save runner resources.
 
 Often times, users will create working templates and make them available on the Internet, but outdated/orphaned. These are also welcomed. In addition to the above tag, use the `orphaned` tag. 
 
