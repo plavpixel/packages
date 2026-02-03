@@ -54,9 +54,13 @@ We welcome and encourage contributions. Please follow the standard `xbps-src` pa
 
 ### Backend
 
+For any backend changes, please use the `backend` tag.
+
 The `build.sh` script is a wrapper for `xbps-src` to work with custom repos. To avoid dependency issues, it copies all `srcpkgs` into the submodule dir `void-packages/srcpkgs` before attempting builds. Reviews and improvements are very welccome!
 
 The workflow file `.github/workflows/build.yml` uses a Docker image [`void-glibc-full`](https://github.com/void-linux/void-containers/pkgs/container/void-glibc-full) from [void-containers](https://github.com/void-linux/void-containers) for a full build and development environment.
+
+The workflow file `.github/workflows/test.yml` is almost identical to `build.yml` with the exception that no packages or repositories are signed/pushed. It runs on every new PR that affects the `srcpkgs/` directory.
 
 ### Packages
 
