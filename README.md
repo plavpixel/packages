@@ -45,7 +45,7 @@ sudo xbps-install <package_name>
 To list all packages available in this repository:
 
 ```sh
-xbps-query -Rs --repository=https://voiders-community.github.io/packages "*"
+xbps-query -i -M --repository https://voiders-community.github.io/packages -s ''
 ```
 
 ## Contributing
@@ -54,9 +54,13 @@ We welcome and encourage contributions. Please follow the standard `xbps-src` pa
 
 ### Backend
 
+For any backend changes, please use the `backend` tag.
+
 The `build.sh` script is a wrapper for `xbps-src` to work with custom repos. To avoid dependency issues, it copies all `srcpkgs` into the submodule dir `void-packages/srcpkgs` before attempting builds. Reviews and improvements are very welccome!
 
 The workflow file `.github/workflows/build.yml` uses a Docker image [`void-glibc-full`](https://github.com/void-linux/void-containers/pkgs/container/void-glibc-full) from [void-containers](https://github.com/void-linux/void-containers) for a full build and development environment.
+
+The workflow file `.github/workflows/test.yml` is almost identical to `build.yml` with the exception that no packages or repositories are signed/pushed. It runs on every new PR that affects the `srcpkgs/` directory.
 
 ### Packages
 
@@ -65,6 +69,8 @@ To keep this repo more open, we allow opening Pull Requests (PRs) if you don't h
 - Why should we add and maintain this package?
 - Should it be compiled from source or download a binary pkg?
 - Does it appear to be safe? (i.e., no known malicious source code or blobs)
+
+New PRs will be checked automatically. For larges packages with long compile times, consider prefixing your PR title with `[ci skip]` to save runner resources.
 
 Often times, users will create working templates and make them available on the Internet, but outdated/orphaned. These are also welcomed. In addition to the above tag, use the `orphaned` tag. 
 
