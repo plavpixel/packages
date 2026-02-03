@@ -13,7 +13,7 @@ concurrency:
 
 jobs:
   build:
-    # Skip if PR title starts with [ci skip]
+    # skip if PR title starts with [ci skip]
     if: "!startsWith(github.event.pull_request.title, '[ci skip]')"
     runs-on: ubuntu-latest
     container:
@@ -31,7 +31,7 @@ jobs:
       - name: Prepare Container
         run: |
           xbps-install -Syu xbps
-          # xtools is included here, providing the xlint command
+          # xtools is included here, providing xlint
           xbps-install -y git bash gnupg tar curl wget base-devel gawk python3 xtools procps-ng
 
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
@@ -50,10 +50,8 @@ jobs:
       - name: Identify changed templates
         id: changes
         run: |
-          # Fetch the base branch to compare against
           git fetch origin ${{ github.base_ref }}
 
-          # Detect changes between the PR base and the current HEAD
           CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep "^srcpkgs/" | cut -d/ -f2 | sort -u | xargs)
 
           if [ -z "$CHANGED" ]; then
@@ -67,7 +65,6 @@ jobs:
       - name: Lint Packages
         if: steps.changes.outputs.templates != ''
         run: |
-          # If this step fails, the job stops immediately.
           for pkg in ${{ steps.changes.outputs.templates }}; do
             echo "Linting $pkg..."
             xlint "srcpkgs/$pkg"

@@ -1,7 +1,8 @@
 # Template file for 'xlibre-video-drivers'
 pkgname=xlibre-video-drivers
 version=25.0.0
-revision=1
+revision=2
+hostmakedepends="gawk automake libtool xorg-util-macros pkg-config"
 metapackage=yes
 depends="xlibre-xf86-video-fbdev xlibre-xf86-video-dummy"
 short_desc="XLibre video drivers meta-package"

@@ -2,11 +2,11 @@
 pkgname=xlibre-xf86-video-vmware
 _pkgname=xf86-video-vmware
 version=25.0.0
-revision=1
+revision=2
 archs="i686* x86_64*"
 build_style=gnu-configure
 configure_args="--prefix=/usr --enable-vmwarectrl-client"
-hostmakedepends="pkg-config"
+hostmakedepends="gawk automake libtool xorg-util-macros pkg-config pkg-config"
 makedepends="xlibre-xserver-devel autoconf xorgproto automake fakeroot gawk gettext libtool m4 pkgconf libdrm-devel MesaLib-devel xorg-util-macros"
 depends="virtual?xserver-abi-video-28_1 mesa-dri"
 short_desc="XLibre fork of X.org vmware video driver"

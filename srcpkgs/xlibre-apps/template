@@ -1,7 +1,8 @@
 # Template file for 'xlibre-apps'
 pkgname=xlibre-apps
 version=25.1.0
-revision=1
+revision=2
+hostmakedepends="gawk automake libtool xorg-util-macros pkg-config"
 metapackage=yes
 depends="iceauth>=0 oclock>=0 sessreg>=0 setxkbmap>=0
  smproxy>=0 transset>=0 x11perf>=0 xauth>=0

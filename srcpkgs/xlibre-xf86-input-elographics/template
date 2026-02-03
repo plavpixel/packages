@@ -2,11 +2,11 @@
 pkgname=xlibre-xf86-input-elographics
 _pkgname=xf86-input-elographics
 version=25.0.1
-revision=1
+revision=2
 archs="x86_64*"
 build_style=gnu-configure
 configure_args="--prefix=/usr"
-hostmakedepends="pkg-config"
+hostmakedepends="gawk automake libtool xorg-util-macros pkg-config pkg-config"
 makedepends="xlibre-xserver-devel autoconf xorgproto automake fakeroot gawk gettext libtool m4 pkgconf xorg-util-macros"
 depends="virtual?xserver-abi-input-26_1"
 short_desc="XLibre fork of X.Org Elographics TouchScreen input driver"

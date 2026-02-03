@@ -2,10 +2,10 @@
 pkgname=xlibre-xf86-video-dummy
 _pkgname=xf86-video-dummy
 version=25.0.0
-revision=1
+revision=2
 build_style=gnu-configure
 configure_args="--prefix=/usr"
-hostmakedepends="pkg-config"
+hostmakedepends="gawk automake libtool xorg-util-macros pkg-config pkg-config"
 makedepends="xlibre-xserver-devel autoconf xorgproto automake fakeroot gawk gettext libtool m4 pkgconf xorg-util-macros"
 depends="virtual?xserver-abi-video-28_1"
 short_desc="XLibre dummy video driver"
