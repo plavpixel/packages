@@ -88,7 +88,7 @@ To build a package from this repository locally:
 1. Clone the repo:
    ```sh
    git clone https://github.com/voiders-community/packages.git --recurse-submodules
-   cd void-packages
+   cd packages
    ```
 
 2. Build using the provided helper script:
